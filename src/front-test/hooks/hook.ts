@@ -1,9 +1,8 @@
 "use strict";
-import { chromium, firefox, webkit, Browser, Page } from 'playwright';
-import { BeforeAll, AfterAll, AfterStep, Status } from '@cucumber/cucumber';
+import { AfterAll, AfterStep, BeforeAll, setDefaultTimeout, Status } from '@cucumber/cucumber';
 import * as fs from 'fs';
 import * as path from 'path';
-import { setDefaultTimeout } from '@cucumber/cucumber';
+import { Browser, chromium, firefox, Page, webkit } from 'playwright';
 
 setDefaultTimeout(60 * 1000);
 
@@ -34,7 +33,7 @@ BeforeAll(async function () {
 
   for (const browserType of browserTypes) {
     console.log(`Iniciando pruebas en: ${browserType.name()}`);
-    const browser = await browserType.launch({ headless: true });
+    const browser = await browserType.launch({ headless: false });
     const context = await browser.newContext();
     const page = await context.newPage();
 
@@ -95,3 +94,4 @@ AfterAll(async function () {
 });
 
 export { browsers, pages };
+
